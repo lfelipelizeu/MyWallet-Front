@@ -25,11 +25,12 @@ export default function SignUp () {
             await signUp(body);
             history.push('/signin');
         } catch (error) {
-            const errorStatus = error.response.status;
+            const errorStatus = error.response?.status;
 
             if (errorStatus === 400) return alert('Dados inválidos!');
             if (errorStatus === 409) return alert('Email já cadastrado!');
             if (errorStatus === 500) return alert('Erro desconhecido! Tente novamente');
+            if (!errorStatus) return alert('Servidor offline');
         }
     }
 
