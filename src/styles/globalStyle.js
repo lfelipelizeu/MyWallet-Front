@@ -3,7 +3,12 @@ import { createGlobalStyle } from 'styled-components';
 const GlobalStyle = createGlobalStyle`
     body {
         background-color: #8C11BE;
+    }
+
+    * {
+        box-sizing: border-box;
         font-family: 'Raleway', sans-serif;
+        font-weight: 400;
     }
 
     h1 {
@@ -136,10 +141,6 @@ const GlobalStyle = createGlobalStyle`
     table {
         border-collapse: collapse;
         border-spacing: 0;
-    }
-
-    * {
-        box-sizing: border-box;
     }
 `;
 
