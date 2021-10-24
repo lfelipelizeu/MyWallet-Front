@@ -1,12 +1,14 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { SignPage, Title, SignForm, SubmitButton } from '../styles/signStyles.js';
 import { Input } from '../styles/inputStyle.js';
 import { signIn } from '../services/mywallet.js';
+import UserContext from '../contexts/UserContext.js';
 
 export default function SignUp () {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const { setUser } = useContext(UserContext);
     const history = useHistory();
 
     async function signUpNewUser (event) {
@@ -20,6 +22,12 @@ export default function SignUp () {
         try {
             const response = await signIn(body);
             const user = response.data;
+
+            setUser(user);
+            localStorage.setItem('user', JSON.stringify({
+                name: user.name,
+                token: user.token
+            }));
 
             history.push('/');
         } catch (error) {
