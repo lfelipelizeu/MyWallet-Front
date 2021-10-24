@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import GlobalStyle from "../styles/globalStyle.js";
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import SignUp from './SignUp.js';
+import SignIn from './SignIn.js';
 
 export default function App() {
   return (
@@ -10,9 +11,8 @@ export default function App() {
       <Container>
         <BrowserRouter>
           <Switch>
-            <Route path="/signup" exact>
-              <SignUp />
-            </Route>
+            <Route path='/signup' component={SignUp} exact />
+            <Route path='/signin' component={SignIn} exact />
           </Switch>
         </BrowserRouter>
       </Container>
