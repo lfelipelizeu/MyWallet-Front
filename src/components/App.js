@@ -5,6 +5,7 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import UserContext from '../contexts/UserContext.js';
 import SignUp from './SignUp.js';
 import SignIn from './SignIn.js';
+import Transactions from './Transactions.js';
 
 export default function App() {
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")));
@@ -17,6 +18,7 @@ export default function App() {
           <Switch>
             <Route path='/signup' component={SignUp} exact />
             <Route path='/signin' component={SignIn} exact />
+            <Route path='/' component={Transactions} exact />
           </Switch>
         </BrowserRouter>
       </Container>
