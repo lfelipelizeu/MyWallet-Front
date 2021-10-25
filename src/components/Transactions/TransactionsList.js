@@ -42,13 +42,13 @@ export default function TransactionsList () {
 
     return (
         <TransactionsBox>
-            <div>
+            <List>
                 {transactions?.map((transaction, index) => <Transaction key={index}>
                     <Day>{dayjs(transaction.date).format('DD/MM')}</Day>
                     <Description>{transaction.description}</Description>
                     <Value type={transaction.type}>{transaction.value}</Value>
                 </Transaction>)}
-            </div>
+            </List>
             <TotalRow>
                 SALDO
                 <Value positive={total >= 0}>{Math.abs(total).toLocaleString('pt-br', {style: 'currency', currency: 'BRL'})}</Value>
@@ -94,8 +94,13 @@ const Value = styled.div`
     right: 0;
 `;
 
+const List = styled.div`
+    overflow: scroll;
+`;
+
 const TotalRow = styled.div`
     width: 100%;
     font-weight: 700;
     position: relative;
+    margin-top: 5px;
 `;
