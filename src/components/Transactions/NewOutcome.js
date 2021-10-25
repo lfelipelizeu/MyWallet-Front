@@ -1,9 +1,12 @@
 import styled from 'styled-components';
+import { useHistory } from 'react-router-dom';
 import { HiOutlineMinusCircle as AddIcon } from 'react-icons/hi';
 
-export default function NewOutcome ({ addNewTransaction }) {
+export default function NewOutcome () {
+    const history = useHistory();
+    
     return (
-        <NewButton onClick={() => addNewTransaction('outcome')}>
+        <NewButton onClick={() => history.push('/newtransaction/outcome')}>
             <AddIcon style={{ color: '#ffffff', fontSize: '25px' }} />
             <NewText>Nova saída</NewText>
         </NewButton>

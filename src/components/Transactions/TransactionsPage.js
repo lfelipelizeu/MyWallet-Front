@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import { RiLogoutBoxRLine as LogoutIcon } from 'react-icons/ri';
 import UserContext from '../../contexts/UserContext.js';
@@ -9,17 +9,11 @@ import NewOutcome from './NewOutcome.js';
 
 export default function TransactionsPage () {
     const { user } = useContext(UserContext);
-    const [newTransactionType, setNewTransactionType] = useState('');
     const history = useHistory();
 
     function logout () {
         localStorage.clear();
         history.push('/signin');
-    }
-
-    function addNewTransaction (type) {
-        setNewTransactionType(type);
-        history.push('/newtransaction');
     }
 
     return (
@@ -30,8 +24,8 @@ export default function TransactionsPage () {
             </PageHeader>
             <TransactionsList />
             <ButtonsBox>
-                <NewIncome addNewTransaction={addNewTransaction} />
-                <NewOutcome addNewTransaction={addNewTransaction} />
+                <NewIncome />
+                <NewOutcome />
             </ButtonsBox>
         </Container>
     );
