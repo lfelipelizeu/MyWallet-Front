@@ -19,8 +19,19 @@ function getTransactions (token) {
     return axios.get(`${BASE_URL}/transactions`, config);
 }
 
+function postNewTransaction (body, token) {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    };
+
+    return axios.post(`${BASE_URL}/transactions`, body, config);
+}
+
 export {
     signUp,
     signIn,
-    getTransactions
+    getTransactions,
+    postNewTransaction
 }

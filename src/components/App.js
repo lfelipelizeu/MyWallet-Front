@@ -6,6 +6,7 @@ import UserContext from '../contexts/UserContext.js';
 import SignUp from './SignUp.js';
 import SignIn from './SignIn.js';
 import TransactionsPage from './Transactions/TransactionsPage.js';
+import NewTransaction from './NewTransaction.js';
 
 export default function App() {
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")));
@@ -19,6 +20,7 @@ export default function App() {
             <Route path='/signup' component={SignUp} exact />
             <Route path='/signin' component={SignIn} exact />
             <Route path='/' component={TransactionsPage} exact />
+            <Route path='/newtransaction/:type' component={NewTransaction} exact />
             <Redirect to='/signin' />
           </Switch>
         </BrowserRouter>
