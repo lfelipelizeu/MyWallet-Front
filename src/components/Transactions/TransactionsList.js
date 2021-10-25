@@ -42,18 +42,27 @@ export default function TransactionsList () {
 
     return (
         <TransactionsBox>
-            <List>
-                {transactions?.map((transaction, index) => <Transaction key={index}>
-                    <Day>{dayjs(transaction.date).format('DD/MM')}</Day>
-                    <Description>{transaction.description}</Description>
-                    <Value type={transaction.type}>{transaction.value}</Value>
-                </Transaction>)}
-            </List>
-            <TotalRow>
-                SALDO
-                <Value positive={total >= 0}>{Math.abs(total).toLocaleString('pt-br', {style: 'currency', currency: 'BRL'})}</Value>
-            </TotalRow>
+            {transactions?.length === 0 ? <NoTransactions /> : 
+                (<><List>
+                    {transactions?.map((transaction, index) => <Transaction key={index}>
+                        <Day>{dayjs(transaction.date).format('DD/MM')}</Day>
+                        <Description>{transaction.description}</Description>
+                        <Value type={transaction.type}>{transaction.value}</Value>
+                    </Transaction>)}
+                </List>
+                <TotalRow>
+                    SALDO
+                    <Value positive={total >= 0}>{Math.abs(total).toLocaleString('pt-br', {style: 'currency', currency: 'BRL'})}</Value>
+                </TotalRow></>)}
         </TransactionsBox>
+    );
+}
+
+function NoTransactions () {
+    return (
+        <NoTransactionsMessage>
+            Não há registros de entrada ou saída
+        </NoTransactionsMessage>
     );
 }
 
@@ -103,4 +112,16 @@ const TotalRow = styled.div`
     font-weight: 700;
     position: relative;
     margin-top: 5px;
+`;
+
+const NoTransactionsMessage = styled.div`
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 20px;
+    color: #868686;
+    padding: 0 10%;
 `;
