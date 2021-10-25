@@ -9,7 +9,18 @@ function signIn (body) {
     return axios.post(`${BASE_URL}/sign-in`, body);
 }
 
+function getTransactions (token) {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    };
+
+    return axios.get(`${BASE_URL}/transactions`, config);
+}
+
 export {
     signUp,
-    signIn
+    signIn,
+    getTransactions
 }
