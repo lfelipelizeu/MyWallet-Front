@@ -1,5 +1,5 @@
 import axios from 'axios';
-const BASE_URL = 'http://localhost:4000';
+const BASE_URL = 'https://appmywallet.herokuapp.com';
 
 function signUp (body) {
     return axios.post(`${BASE_URL}/sign-up`, body);
