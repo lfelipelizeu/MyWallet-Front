@@ -42,18 +42,28 @@ export default function TransactionsList () {
 
     return (
         <TransactionsBox>
-            {transactions?.length === 0 ? <NoTransactions /> : 
-                (<><List>
-                    {transactions?.map((transaction, index) => <Transaction key={index}>
-                        <Day>{dayjs(transaction.date).format('DD/MM')}</Day>
-                        <Description>{transaction.description}</Description>
-                        <Value type={transaction.type}>{transaction.value}</Value>
-                    </Transaction>)}
-                </List>
-                <TotalRow>
-                    SALDO
-                    <Value positive={total >= 0}>{Math.abs(total).toLocaleString('pt-br', {style: 'currency', currency: 'BRL'})}</Value>
-                </TotalRow></>)}
+            {transactions?.length === 0 ? <NoTransactions /> : (
+                <>
+                    <List>
+                        {transactions?.map((transaction, index) => (
+                            <Transaction key={index}>
+                                <div>
+                                    <Day>{dayjs(transaction.date).format('DD/MM')}</Day>
+                                    <Description>{transaction.description}</Description>
+                                </div>
+                                <Value type={transaction.type}>
+                                    {Number(transaction.value).toLocaleString('pt-br', {style: 'currency', currency: 'BRL'})}
+                                </Value>
+                            </Transaction>
+                            )
+                        )}
+                    </List>
+                    <TotalRow>
+                            SALDO
+                            <Value positive={total >= 0}>{Math.abs(total).toLocaleString('pt-br', {style: 'currency', currency: 'BRL'})}</Value>
+                    </TotalRow>
+                </>
+            )}
         </TransactionsBox>
     );
 }
@@ -81,8 +91,9 @@ const TransactionsBox = styled.div`
 const Transaction = styled.div`
     width: 100%;
     display: flex;
+    justify-content: space-between;
     margin-bottom: 15px;
-    position: relative;
+    padding-right: 5px;
 `;
 
 const Day = styled.span`
@@ -98,20 +109,26 @@ const Description = styled.span`
 const Value = styled.div`
     font-size: 16px;
     color: ${({ type, positive }) => type === 'income' || positive ? '#039B00' : '#C70000'};
-    position: absolute;
-    top: 0;
-    right: 0;
 `;
 
 const List = styled.div`
-    overflow: scroll;
+    overflow-y: scroll;
+    position: relative;
+
+    ::-webkit-scrollbar {
+        width: 5px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background-color: rgba(119, 119, 119, 0.3);
+        border-radius: 5px;
+    }
 `;
 
-const TotalRow = styled.div`
-    width: 100%;
+const TotalRow = styled(Transaction)`
     font-weight: 700;
-    position: relative;
     margin-top: 5px;
+    margin-bottom: 0px;
 `;
 
 const NoTransactionsMessage = styled.div`
