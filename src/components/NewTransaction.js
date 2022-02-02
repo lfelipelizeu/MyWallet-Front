@@ -4,6 +4,7 @@ import { useParams, useHistory } from 'react-router-dom';
 import { postNewTransaction } from '../services/mywallet.js';
 import { Input } from '../styles/inputStyle.js';
 import UserContext from '../contexts/UserContext.js';
+import { ErrorAlert } from './SweetAlerts.js';
 
 export default function NewTransaction () {
     const { user } = useContext(UserContext);
@@ -30,13 +31,13 @@ export default function NewTransaction () {
         } catch (error) {
             const errorStatus = error.response?.status;
 
-            if (errorStatus === 422) return alert('Dados inválidos!');
+            if (errorStatus === 422) return ErrorAlert('Dados inválidos!');
             if (errorStatus === 401) {
-                alert('Você não está logado!');
+                ErrorAlert('Você não está logado!');
                 return history.push('/signin');
             }
-            if (errorStatus === 500) return alert('Erro desconhecido! Tente novamente');
-            if (!errorStatus) return alert('Servidor offline');
+            if (errorStatus === 500) return ErrorAlert('Erro desconhecido! Tente novamente');
+            if (!errorStatus) return ErrorAlert('Servidor offline');
         }
     }
 

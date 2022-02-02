@@ -6,14 +6,19 @@ import UserContext from '../../contexts/UserContext.js';
 import TransactionsList from './TransactionsList.js';
 import NewIncome from './NewIncome.js';
 import NewOutcome from './NewOutcome.js';
+import { ConfirmAlert } from '../SweetAlerts.js';
 
 export default function TransactionsPage () {
     const { user } = useContext(UserContext);
     const history = useHistory();
 
-    function logout () {
-        localStorage.clear();
-        history.push('/signin');
+    async function logout () {
+        const result = await ConfirmAlert('Tem certeza que deseja sair?');
+
+        if (result.isConfirmed) {
+            localStorage.clear();
+            return history.push('/signin');
+        }
     }
 
     return (

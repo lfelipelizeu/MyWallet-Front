@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom';
 import { useState, useEffect, useContext } from 'react';
 import UserContext from '../../contexts/UserContext.js';
 import { getTransactions } from '../../services/mywallet.js';
+import { ErrorAlert } from '../SweetAlerts.js';
 
 export default function TransactionsList () {
     const { user } = useContext(UserContext);
@@ -32,11 +33,11 @@ export default function TransactionsList () {
             .catch((error) => {
                 const errorStatus = error.response?.status;
                 if (errorStatus === 401) {
-                    alert('Sessão inválida! Entre novamente.');
+                    ErrorAlert('Sessão inválida! Entre novamente.');
                     return history.push('/signin');
                 };
-                if (errorStatus === 500) return alert('Erro desconhecido! Tente novamente');
-                if (!errorStatus) return alert('Servidor offline');
+                if (errorStatus === 500) return ErrorAlert('Erro desconhecido! Tente novamente');
+                if (!errorStatus) return ErrorAlert('Servidor offline');
             });
     }, []);
 

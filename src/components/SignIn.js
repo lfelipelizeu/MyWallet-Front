@@ -4,6 +4,7 @@ import { SignPage, Title, SignForm, SubmitButton } from '../styles/signStyles.js
 import { Input } from '../styles/inputStyle.js';
 import { signIn } from '../services/mywallet.js';
 import UserContext from '../contexts/UserContext.js';
+import { ErrorAlert } from './SweetAlerts.js';
 
 export default function SignUp () {
     const [email, setEmail] = useState('');
@@ -33,11 +34,11 @@ export default function SignUp () {
         } catch (error) {
             const errorStatus = error.response?.status;
 
-            if (errorStatus === 400) return alert('Dados inválidos!');
-            if (errorStatus === 404) return alert('Usuário não encontrado.');
-            if (errorStatus === 401) return alert('Senha incorreta!');
-            if (errorStatus === 500) return alert('Erro desconhecido! Tente novamente');
-            if (!errorStatus) return alert('Servidor offline');
+            if (errorStatus === 400) return ErrorAlert('Dados inválidos!');
+            if (errorStatus === 404) return ErrorAlert('Usuário não encontrado.');
+            if (errorStatus === 401) return ErrorAlert('Senha incorreta!');
+            if (errorStatus === 500) return ErrorAlert('Erro desconhecido! Tente novamente');
+            if (!errorStatus) return ErrorAlert('Servidor offline');
         }
     }
 

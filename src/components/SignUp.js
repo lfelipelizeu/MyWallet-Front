@@ -2,7 +2,8 @@ import { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { SignPage, Title, SignForm, SubmitButton } from '../styles/signStyles.js';
 import { Input } from '../styles/inputStyle.js';
-import { signUp } from '../services/mywallet.js';
+import { signUp } from '../services/mywallet.js'; 
+import { ErrorAlert, SuccessAlert } from './SweetAlerts.js';
 
 export default function SignUp () {
     const [name, setName] = useState('');
@@ -21,16 +22,19 @@ export default function SignUp () {
             repeatPassword
         };
 
+        if (password !== repeatPassword) return ErrorAlert('As senhas precisam ser iguais!');
+
         try {
             await signUp(body);
+            SuccessAlert('Cadastro concluído!')
             history.push('/signin');
         } catch (error) {
             const errorStatus = error.response?.status;
 
-            if (errorStatus === 400) return alert('Dados inválidos!');
-            if (errorStatus === 409) return alert('Email já cadastrado!');
-            if (errorStatus === 500) return alert('Erro desconhecido! Tente novamente');
-            if (!errorStatus) return alert('Servidor offline');
+            if (errorStatus === 400) return ErrorAlert('Dados inválidos!');
+            if (errorStatus === 409) return ErrorAlert('Email já cadastrado!');
+            if (errorStatus === 500) return ErrorAlert('Erro desconhecido! Tente novamente');
+            if (!errorStatus) return ErrorAlert('Servidor offline');
         }
     }
 
