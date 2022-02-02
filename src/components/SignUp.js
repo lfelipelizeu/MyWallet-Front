@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { ThreeDots } from 'react-loader-spinner';
 import { Link, useHistory } from 'react-router-dom';
 import { SignPage, Title, SignForm, SubmitButton } from '../styles/signStyles.js';
 import { Input } from '../styles/inputStyle.js';
@@ -10,6 +11,7 @@ export default function SignUp () {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [repeatPassword, setRepeatPassword] = useState('');
+    const [loading, setLoading] = useState(false);
     const history = useHistory();
 
     async function signUpNewUser (event) {
@@ -23,6 +25,7 @@ export default function SignUp () {
         };
 
         if (password !== repeatPassword) return ErrorAlert('As senhas precisam ser iguais!');
+        setLoading(true);
 
         try {
             await signUp(body);
@@ -31,6 +34,7 @@ export default function SignUp () {
         } catch (error) {
             const errorStatus = error.response?.status;
 
+            setLoading(false);
             if (errorStatus === 400) return ErrorAlert('Dados inválidos!');
             if (errorStatus === 409) return ErrorAlert('Email já cadastrado!');
             if (errorStatus === 500) return ErrorAlert('Erro desconhecido! Tente novamente');
@@ -46,7 +50,16 @@ export default function SignUp () {
                 <Input type="email" placeholder="Email" onChange={(event) => setEmail(event.target.value)} required />
                 <Input type="password" placeholder="Senha" onChange={(event) => setPassword(event.target.value)} required />
                 <Input type="password" placeholder="Confirme a senha" onChange={(event) => setRepeatPassword(event.target.value)} required />
-                <SubmitButton>Cadastrar</SubmitButton>
+                <SubmitButton disabled={loading}>
+                    {loading ?
+                        <ThreeDots
+                            color="#FFFFFF"
+                            height="35px"
+                        />
+                        :
+                        "Cadastrar"
+                    }
+                </SubmitButton>
             </SignForm>
             <Link to='/signin'>
                 Já tem uma conta? Entre agora!

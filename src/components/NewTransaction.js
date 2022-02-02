@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { useState, useContext } from 'react';
+import { ThreeDots } from 'react-loader-spinner';
 import { useParams, useHistory } from 'react-router-dom';
 import { postNewTransaction } from '../services/mywallet.js';
 import { Input } from '../styles/inputStyle.js';
@@ -11,6 +12,7 @@ export default function NewTransaction () {
     const { type } = useParams();
     const [value, setValue] = useState('');
     const [description, setDescription] = useState('');
+    const [loading, setLoading] = useState(false);
     const history = useHistory();
 
     if (!user) return history.push('/signin');
@@ -24,6 +26,8 @@ export default function NewTransaction () {
             type
         };
 
+        setLoading(true);
+
         try {
             await postNewTransaction(body, user.token);
 
@@ -31,6 +35,7 @@ export default function NewTransaction () {
         } catch (error) {
             const errorStatus = error.response?.status;
 
+            setLoading(false);
             if (errorStatus === 422) return ErrorAlert('Dados inválidos!');
             if (errorStatus === 401) {
                 ErrorAlert('Você não está logado!');
@@ -47,7 +52,16 @@ export default function NewTransaction () {
             <Form onSubmit={addNewTransaction}>
                 <Input type="text" placeholder="Valor" onChange={(event) => setValue(event.target.value)} required />
                 <Input type="text" placeholder="Descrição" onChange={(event) => setDescription(event.target.value)} required />
-                <Button>Salvar {type === 'income' ? 'entrada' : 'saída'}</Button>
+                <Button disabled={loading}>
+                    {loading ?
+                        <ThreeDots
+                            color="#FFFFFF"
+                            height="35px"
+                        />
+                        :
+                        `Salvar ${type === 'income' ? 'entrada' : 'saída'}`
+                    }
+                </Button>
             </Form>
         </Container>
     )
@@ -82,4 +96,7 @@ const Button = styled.button`
     color: #FFFFFF;
     font-weight: 700;
     font-size: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 `;

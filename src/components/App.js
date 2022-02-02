@@ -7,6 +7,7 @@ import SignUp from './SignUp.js';
 import SignIn from './SignIn.js';
 import TransactionsPage from './Transactions/TransactionsPage.js';
 import NewTransaction from './NewTransaction.js';
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 
 export default function App() {
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")));

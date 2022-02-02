@@ -39,6 +39,9 @@ const SubmitButton = styled.button`
     color: #FFFFFF;
     font-weight: 700;
     font-size: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 `;
 
 export {
